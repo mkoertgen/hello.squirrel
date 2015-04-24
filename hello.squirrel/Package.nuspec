@@ -1,27 +1,19 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>NuPlug</id>
+    <id>hello.squirrel</id>
     <version>$Version$</version>
-    <title>NuPlug</title>
-    <authors>tmentzel, mkoertgen</authors>
-    <owners>tmentzel, mkoertgen</owners>
+    <title>hello.squirrel</title>
+    <authors>mkoertgen</authors>
+    <owners>mkoertgen</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>NuPlug - plugins powered by NuGet.</description>
-    <summary>NuPlug - plugins powered by NuGet.</summary>
+    <description>A squirrel example.</description>
+    <summary>A squirrel example.</summary>
     <copyright/>
     <releaseNotes>Revision: $Revision$</releaseNotes>
-    <projectUrl>https://github.com/awesome-inc/NuPlug</projectUrl>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.ComponentModel.Composition" targetFramework="" />
-      <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
-      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
-    </frameworkAssemblies>
-    <dependencies>
-      <dependency id="NuGet.Core" version="2.8.5" />
-    </dependencies>
+    <projectUrl>https://github.com/mkoertgen/hello.squirrel</projectUrl>
   </metadata>
   <files>
-    <file src="bin\Release\NuPlug.dll" target="lib"/>
+    <file src="bin\Release\**\*.*" exclude="**\*.pdb;**\*.xml" target="lib\net45"/>
   </files>
 </package>

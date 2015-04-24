@@ -12,7 +12,7 @@ namespace hello.squirrel
 
         private async void UpdateOnClick(object sender, RoutedEventArgs e)
         {
-            using (var mgr = new UpdateManager("https://path/to/my/update/folder", "hello.squirrel", FrameworkVersion.Net45))
+            using (var mgr = new UpdateManager("http://localhost:8888/nuget/feed", "hello.squirrel", FrameworkVersion.Net45))
             {
                 await mgr.UpdateApp();
             }
