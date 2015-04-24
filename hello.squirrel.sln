@@ -5,6 +5,28 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.squirrel", "hello.squirrel\hello.squirrel.csproj", "{48FA2E12-B90B-4FB0-99DC-D4BCC900AED1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DEB0E762-0CEF-4B1F-A646-B5E373DA3408}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{E737E763-D808-40F8-BFF7-B181E0553F59}"
+	ProjectSection(SolutionItems) = preProject
+		build.bat = build.bat
+		Build.proj = Build.proj
+		.build\build.targets = .build\build.targets
+		.build\empty.targets = .build\empty.targets
+		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
+		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0FE7E352-D803-47B6-B534-FAC02F6844B2}"
+	ProjectSection(SolutionItems) = preProject
+		solution.targets = solution.targets
+		SolutionInfo.cs = SolutionInfo.cs
+		VersionInfo.g.cs = VersionInfo.g.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
