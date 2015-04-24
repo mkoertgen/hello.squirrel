@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>hello.squirrel</id>
+    <id>HelloSquirrel</id>
     <version>$Version$</version>
-    <title>hello.squirrel</title>
+    <title>HelloSquirrel</title>
     <authors>mkoertgen</authors>
     <owners>mkoertgen</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -14,6 +14,7 @@
     <projectUrl>https://github.com/mkoertgen/hello.squirrel</projectUrl>
   </metadata>
   <files>
-    <file src="bin\Release\**\*.*" exclude="**\*.pdb;**\*.xml" target="lib\net45"/>
+<!--     <file src="bin\Release\**\*.*" exclude="**\*.pdb;**\*.xml" target="lib\net45"/>
+ -->    <file src="bin\Release\**\*.*" target="lib\net45"/>
   </files>
 </package>

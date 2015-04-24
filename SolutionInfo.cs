@@ -8,13 +8,12 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyTrademark("<trademark name>")]
-[assembly: AssemblyProduct("<product name>")]
+[assembly: AssemblyTrademark("mkoertgen")]
+[assembly: AssemblyProduct("HelloSquirrel")]
 
-[assembly: AssemblyDescription(@"© <company name>
-<your description1>")]
-[assembly: AssemblyCompany("<your company>")]
-[assembly: AssemblyCopyright("Copyright © <company name> <year-year>")]
+[assembly: AssemblyDescription(@"© mkoertgen 2015")]
+[assembly: AssemblyCompany("mkoertgen")]
+[assembly: AssemblyCopyright("Copyright © mkoertgen 2015")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en", UltimateResourceFallbackLocation.MainAssembly)]
