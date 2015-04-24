@@ -12,6 +12,7 @@ namespace hello.squirrel
 
         private async void UpdateOnClick(object sender, RoutedEventArgs e)
         {
+            // cf.: https://github.com/mkoertgen/hello.nuget.server
             using (var mgr = new UpdateManager("http://localhost:8888/nuget/feed", "hello.squirrel", FrameworkVersion.Net45))
             {
                 await mgr.UpdateApp();
