@@ -10,7 +10,7 @@ namespace HelloSquirrel
         private const string AppName = "HelloSquirrel";
         private const string UpdateUrl = "http://localhost:8080/Releases";
         // ReSharper disable once NotAccessedField.Local
-        static bool _showTheWelcomeWizard;
+        internal static bool ShowTheWelcomeWizard;
 
         internal static readonly UpdateManager Updater = new UpdateManager(UpdateUrl, AppName, FrameworkVersion.Net45);
 
@@ -31,7 +31,7 @@ namespace HelloSquirrel
                     onAppUpdate: v => Updater.CreateShortcutForThisExe(),
                     // ReSharper restore RedundantArgumentName
                     onAppUninstall: v => Updater.RemoveShortcutForThisExe(),
-                    onFirstRun: () => _showTheWelcomeWizard = true);
+                    onFirstRun: () => ShowTheWelcomeWizard = true);
 
 
                 var application = new App();

@@ -9,6 +9,13 @@ namespace HelloSquirrel
         public MainWindow()
         {
             InitializeComponent();
+
+            Loaded += (s, a) =>
+            {
+
+                if (Program.ShowTheWelcomeWizard)
+                    MessageBox.Show("First Run. Welcome to HelloSquirrel. TODO: some intro");
+            };
         }
 
         private async void UpdateOnClick(object sender, RoutedEventArgs e)
@@ -41,12 +48,6 @@ namespace HelloSquirrel
             {
                 BusyIndicator.Visibility = Visibility.Hidden;
             }
-        }
-
-        private void gif_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            BusyIndicator.Position = new TimeSpan(0, 0, 1);
-            BusyIndicator.Play();
         }
     }
 }

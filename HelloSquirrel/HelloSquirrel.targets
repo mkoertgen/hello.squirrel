@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="Package" DependsOnTargets="Build;PackageWithNuGet;SquirrelReleasify"/>
+  <Target Name="Deploy" DependsOnTargets="Package;CopySquirrelReleasesToDropLocation"/>
+
+  <PropertyGroup>
+    <SquirrellPath>$(SolutionDir)packages\squirrel.windows.*\tools\Squirrel.exe</SquirrellPath>
+    <SquirrellOutput Condition="'$(SquirrellOutput)' == ''">$(ProjectDir)Releases</SquirrellOutput>
+    <DropLocation></DropLocation>
+  </PropertyGroup>
+
+  <Target Name="SquirrelReleasify">
+    <Warning Condition="'$(PackageFile)'=='' Or !Exists($(PackageFile))" Text="Skipping target because package file has not been built." />
+    <ItemGroup>
+      <SquirrelConsole Include="$(SquirrellPath)"/>
+    </ItemGroup>
+    <PropertyGroup>
+      <SquirrelArgs>--releasify &quot;$(PackageFile)&quot; -r=&quot;$(SquirrellOutput)&quot;</SquirrelArgs>
+    </PropertyGroup>
+
+    <Exec Condition="'$(PackageFile)'!='' And Exists($(PackageFile))"
+          Command="&quot;@(SquirrelConsole->'%(FullPath)')&quot; $(SquirrelArgs)" />
+  </Target>
+
+  <Target Name="CopySquirrelReleasesToDropLocation">
+    <Warning  Condition="'$(DropLocation)' == ''" Text="Property &quot;DropLocation&quot; not set. Skipping."/>
+    <ItemGroup>
+      <SquirrelFiles Include="$(SquirrelOutput)\*.*"/>
+    </ItemGroup>
+    <Copy Condition="'$(DropLocation)' != ''"
+      SourceFiles="@(SquirrelFiles)" DestinationFolder="$(DropLocation)"/>
+  </Target>
+
+</Project>

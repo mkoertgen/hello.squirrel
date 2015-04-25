@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject>HelloSquirrel.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\github-icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DeltaCompressionDotNet">
       <HintPath>..\packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.dll</HintPath>
@@ -91,6 +94,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.12\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="App.xaml">
@@ -121,6 +127,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="HelloSquirrel.targets" />
     <None Include="Package.nuspec" />
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
@@ -131,8 +138,15 @@
   <ItemGroup>
     <Resource Include="Images\ajax-loader.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\github-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\github-icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.build\build.targets" />
+  <Import Project="HelloSquirrel.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
