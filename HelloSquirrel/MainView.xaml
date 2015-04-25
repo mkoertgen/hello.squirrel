@@ -1,8 +1,16 @@
-﻿<Window x:Class="HelloSquirrel.MainWindow"
+﻿<Window x:Class="HelloSquirrel.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
-        Title="MainWindow" Height="350" Width="525">
+        Title="HelloSquirrel" Height="350" Width="525">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Padding" Value="4"/>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -12,10 +20,12 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Content"/>
             <Image x:Name="BusyIndicator" gif:ImageBehavior.AnimatedSource="Images/ajax-loader.gif"
-               Width="16" Height="16" Visibility="Hidden"/>
+               Width="16" Height="16" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibility}}"/>
         </StackPanel>
+        
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Check for Update" Click="UpdateOnClick" Height="24" Margin="4" Padding="4"/>
+            <Button x:Name="DoShowInfo" Content="Show Info" />
+            <Button x:Name="DoCheckForUpdate" Content="Check for Update" />
         </StackPanel>
     </Grid>
 </Window>

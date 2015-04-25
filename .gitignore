@@ -189,3 +189,6 @@ _Pvt_Extensions/
 ModelManifest.xml
 *.g.cs
 *.nupkg
+
+# Squirrel generated files
+Releases/*

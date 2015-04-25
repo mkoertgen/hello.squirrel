@@ -23,11 +23,12 @@
           Command="&quot;@(SquirrelConsole->'%(FullPath)')&quot; $(SquirrelArgs)" />
   </Target>
 
-  <Target Name="CopySquirrelReleasesToDropLocation">
+  <Target Name="CopySquirrelReleasesToDropLocation" DependsOnTargets="Package">
     <Warning  Condition="'$(DropLocation)' == ''" Text="Property &quot;DropLocation&quot; not set. Skipping."/>
     <ItemGroup>
-      <SquirrelFiles Include="$(SquirrelOutput)\*.*"/>
+      <SquirrelFiles Include="$(SquirrellOutput)\*.*"/>
     </ItemGroup>
+    <Message Text="Releases: @(SquirrelFiles, ' ')" Importance="High"/>
     <Copy Condition="'$(DropLocation)' != ''"
       SourceFiles="@(SquirrelFiles)" DestinationFolder="$(DropLocation)"/>
   </Target>
