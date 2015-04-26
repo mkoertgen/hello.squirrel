@@ -39,7 +39,7 @@ namespace HelloSquirrel
             {
                 var version = _updateManager.CurrentlyInstalledVersion();
                 if (version == null) throw new InvalidOperationException("Could not retreive current version");
-                _messageService.Show(version.ToString());
+                _messageService.Show("You are running: " +version, "Information");
 
             }
             catch (Exception ex)
@@ -58,15 +58,22 @@ namespace HelloSquirrel
                 if (updateInfo.CurrentlyInstalledVersion == null)
                     throw new InvalidOperationException("Could not determine currently installed version");
 
-                if (updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version)
+                var currentVersion = updateInfo.CurrentlyInstalledVersion.Version;
+                var newVersion = updateInfo.FutureReleaseEntry.Version;
+                if (newVersion > currentVersion)
                 {
-                    if (_messageService.Show("Update available. Dou you want to update now?", "Update",
-                        MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
+                    if (_messageService.Show("Update " + newVersion + " available. Dou you want to update now?", 
+                        "Update", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
+                    {
                         await _updateManager.UpdateApp();
+                        if (_messageService.Show("Update applied. Restart application to take effect.",
+                            "Information", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
+                            Program.Restart();
+                    }
                 }
                 else
                 {
-                    _messageService.Show("You are up to date", "Information", MessageButton.Ok,
+                    _messageService.Show("You are up to date: " + currentVersion, "Information", MessageButton.Ok,
                         MessageImage.Information);
                 }
             }
