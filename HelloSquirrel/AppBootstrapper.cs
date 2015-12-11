@@ -15,9 +15,7 @@ namespace HelloSquirrel
     /// </summary>
     class AppBootstrapper : BootstrapperBase
     {
-        private IContainer _container;
-
-        public AppBootstrapper(bool useApplication)
+        private AppBootstrapper(bool useApplication)
             : base(useApplication)
         {
             Initialize();
@@ -28,7 +26,7 @@ namespace HelloSquirrel
         { }
 
         // for tests
-        internal IContainer Container { get { return _container; } }
+        private IContainer Container { get; set; }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
@@ -43,7 +41,7 @@ namespace HelloSquirrel
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance();
             builder.RegisterInstance(CreateUpdater()).SingleInstance();
 
-            _container = builder.Build();
+            Container = builder.Build();
         }
 
 
@@ -54,7 +52,7 @@ namespace HelloSquirrel
         {
             const string appName = "HelloSquirrel";
             const string updateUrl = "http://localhost:8080/Releases";
-            var updater = new UpdateManager(updateUrl, appName, FrameworkVersion.Net45);
+            var updater = new UpdateManager(updateUrl, appName);
             // Note, in most of these scenarios, the app exits after this method completes!
             SquirrelAwareApp.HandleEvents(
                 // ReSharper disable RedundantArgumentName
@@ -69,9 +67,9 @@ namespace HelloSquirrel
 
         protected override object GetInstance(Type service, string key)
         {
-            if (service == null) throw new ArgumentNullException("service");
+            if (service == null) throw new ArgumentNullException(nameof(service));
 
-            if (String.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrWhiteSpace(key))
             {
                 object result;
                 if (Container.TryResolve(service, out result))
@@ -83,7 +81,7 @@ namespace HelloSquirrel
                 if (Container.TryResolveNamed(key, service, out result))
                     return result;
             }
-            throw new DependencyResolutionException(String.Format(CultureInfo.CurrentCulture, "Could not locate any instances of contract {0}.", key ?? service.Name));
+            throw new DependencyResolutionException(string.Format(CultureInfo.CurrentCulture, "Could not locate any instances of contract {0}.", key ?? service.Name));
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
