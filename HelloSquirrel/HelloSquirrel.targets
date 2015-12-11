@@ -11,10 +11,20 @@
   </PropertyGroup>
 
   <Target Name="SquirrelReleasify">
-    <Warning Condition="'$(PackageFile)'=='' Or !Exists($(PackageFile))" Text="Skipping target because package file has not been built." />
+    <PropertyGroup>
+      <PackageVersion Condition="'$(PackageVersion)'==''">$(GitVersion_NuGetVersion)</PackageVersion>
+      <PackageId Condition="'$(PackageName)'=='' And Exists('$(ProjectName).$(PackageVersion).nupkg')">$(ProjectName)</PackageId>
+      <PackageId Condition="'$(PackageName)'=='' And Exists('$(AssemblyName).$(PackageVersion).nupkg')">$(AssemblyName)</PackageId>
+      <PackageId Condition="'$(PackageName)'=='' And Exists('$(RootNamespace).$(PackageVersion).nupkg')">$(RootNamespace)</PackageId>
+      <PackageFile>$(PackageId).$(PackageVersion).nupkg</PackageFile>
+    </PropertyGroup>  
+    
+    <Message Condition="!Exists($(PackageFile))" Text="Skipping target because package file '$(PackageFile)' has not been built for project '$(ProjectName)'" Importance="Normal"  />    
+    
     <ItemGroup>
       <SquirrelConsole Include="$(SquirrellPath)"/>
     </ItemGroup>
+
     <PropertyGroup>
       <SquirrelArgs>--releasify &quot;$(PackageFile)&quot; -r=&quot;$(SquirrellOutput)&quot;</SquirrelArgs>
     </PropertyGroup>
@@ -24,11 +34,12 @@
   </Target>
 
   <Target Name="CopySquirrelReleasesToDropLocation" DependsOnTargets="Package">
-    <Warning  Condition="'$(DropLocation)' == ''" Text="Property &quot;DropLocation&quot; not set. Skipping."/>
     <ItemGroup>
       <SquirrelFiles Include="$(SquirrellOutput)\*.*"/>
     </ItemGroup>
-    <Message Text="Releases: @(SquirrelFiles, ' ')" Importance="High"/>
+    <Message Text="Releases:%0a  @(SquirrelFiles, '%0a  ')" Importance="High"/>
+    
+    <Warning  Condition="'$(DropLocation)' == ''" Text="Property &quot;DropLocation&quot; not set. Skipping"/>
     <Copy Condition="'$(DropLocation)' != ''"
       SourceFiles="@(SquirrelFiles)" DestinationFolder="$(DropLocation)"/>
   </Target>
