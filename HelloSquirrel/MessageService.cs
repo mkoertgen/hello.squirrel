@@ -9,7 +9,7 @@ namespace HelloSquirrel
     {
         public MessageResult Show(string message, string caption = null, MessageButton button = MessageButton.Ok, MessageImage icon = MessageImage.None)
         {
-            return ShowMessageBox(message, caption ?? String.Empty, button, icon);
+            return ShowMessageBox(message, caption ?? string.Empty, button, icon);
         }
 
         #region Private
@@ -17,7 +17,7 @@ namespace HelloSquirrel
         static MessageResult ShowMessageBox(string message, string caption, MessageButton button, MessageImage icon)
         {
             if (string.IsNullOrEmpty(message))
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
 
             var messageBoxButton = TranslateMessageButton(button);
             var messageBoxImage = TranslateMessageImage(icon);

@@ -14,7 +14,7 @@ namespace HelloSquirrel
 
         public MainViewModel(IUpdateManager updateManager, IMessageService messageService = null)
         {
-            if (updateManager == null) throw new ArgumentNullException("updateManager");
+            if (updateManager == null) throw new ArgumentNullException(nameof(updateManager));
             _updateManager = updateManager;
             _messageService = messageService ?? new MessageService();
 
