@@ -45,11 +45,12 @@ namespace HelloSquirrel
 
         internal static void Restart()
         {
+            // NOTE: Using UpdateManager.RestartApp gives the "AbandonedMutexException"
+            // cf.: https://github.com/Squirrel/Squirrel.Windows/issues/228
+            // Workaround: We restart ourselves using the desktop shortcut.
+
             // NOTE: We need to have Squirrel start our application, i.e.
             //   Update.exe --processStart HelloSquirrel.exe
-            // Just using the assembly won't start the updated app.
-            
-            //System.Windows.Forms.Application.Restart();
             var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             var squirrelShortcut = Path.Combine(desktop, "HelloSquirrel.lnk");
             Process.Start(squirrelShortcut);

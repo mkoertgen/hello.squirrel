@@ -37,7 +37,6 @@ namespace HelloSquirrel
         protected override void OnExit(object sender, EventArgs e)
         {
             Updater.Dispose();
-
             base.OnExit(sender, e);
         }
 
@@ -60,7 +59,7 @@ namespace HelloSquirrel
         private static IUpdateManager CreateUpdater()
         {
             const string appName = "HelloSquirrel";
-            const string updateUrl = "http://localhost:8080/Releases";
+            const string updateUrl = @"c:\temp\Releases";
             var updater = new UpdateManager(updateUrl, appName);
             // Note, in most of these scenarios, the app exits after this method completes!
             SquirrelAwareApp.HandleEvents(
