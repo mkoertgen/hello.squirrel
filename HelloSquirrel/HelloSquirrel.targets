@@ -5,10 +5,21 @@
   <Target Name="Deploy" DependsOnTargets="Package;CopySquirrelReleasesToDropLocation"/>
 
   <PropertyGroup>
+	<PackageVersion></PackageVersion>
+    <DropLocation></DropLocation>
     <SquirrellPath>$(SolutionDir)packages\squirrel.windows.*\tools\Squirrel.exe</SquirrellPath>
     <SquirrellOutput Condition="'$(SquirrellOutput)' == ''">$(ProjectDir)Releases</SquirrellOutput>
-    <DropLocation></DropLocation>
   </PropertyGroup>
+  
+  <Target Name="PackageWithNuGet" DependsOnTargets="Build">
+    <PropertyGroup>
+      <Revision>$(GitVersion_Sha)</Revision>
+      <PackageVersion Condition="'$(PackageVersion)'==''">$(GitVersion_NuGetVersion)</PackageVersion>
+    </PropertyGroup>
+    <Message Importance="Normal" Condition="!Exists($(NuspecFile))" Text="Skipping target because .nuspec-file is missing (expected '$(NuspecFile)')" />
+    <Exec Condition="Exists($(NuspecFile))"
+          Command="nuget pack $(NuspecFile) -Properties Version=$(PackageVersion);Revision=$(Revision);Configuration=$(Configuration)"/>
+  </Target>  
 
   <Target Name="SquirrelReleasify">
     <PropertyGroup>
