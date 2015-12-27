@@ -25,12 +25,20 @@ namespace HelloSquirrel
             : this(true)
         { }
 
-        // for tests
         private IContainer Container { get; set; }
+        private IUpdateManager Updater { get; set; }
+
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DisplayRootViewFor<MainViewModel>();
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            Updater.Dispose();
+
+            base.OnExit(sender, e);
         }
 
         protected override void Configure()
@@ -39,11 +47,12 @@ namespace HelloSquirrel
 
             builder.RegisterType<WindowManager>().As<IWindowManager>().SingleInstance();
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance();
-            builder.RegisterInstance(CreateUpdater()).SingleInstance();
+
+            Updater = CreateUpdater();
+            builder.RegisterInstance(Updater).SingleInstance();
 
             Container = builder.Build();
         }
-
 
         // ReSharper disable once NotAccessedField.Local
         internal static bool ShowTheWelcomeWizard;
