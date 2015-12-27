@@ -11,6 +11,8 @@ namespace HelloSquirrel
         private readonly IUpdateManager _updateManager;
         private readonly IMessageService _messageService;
         private bool _isBusy;
+        private bool _isUpdating;
+        private int _progress;
 
         public MainViewModel(IUpdateManager updateManager, IMessageService messageService = null)
         {
@@ -33,14 +35,39 @@ namespace HelloSquirrel
             }
         }
 
+        public bool IsUpdating
+        {
+            get { return _isUpdating; }
+            private set
+            {
+                if (value.Equals(_isUpdating)) return;
+                _isUpdating = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public int Progress
+        {
+            get { return _progress; }
+            private set
+            {
+                if (value.Equals(_progress)) return;
+                _progress = value;
+                NotifyOfPropertyChange();
+                NotifyOfPropertyChange(nameof(IsIndeterminate));
+            }
+        }
+
+        public bool IsIndeterminate => Progress <= 0;
+
         public void DoShowInfo()
         {
             try
             {
-                var version = _updateManager.CurrentlyInstalledVersion();
-                if (version == null) throw new InvalidOperationException("Could not retreive current version");
-                _messageService.Show("You are running: " +version, "Information");
-
+                var version = 
+                    _updateManager.CurrentlyInstalledVersion()?.ToString() 
+                    ?? GitVersionInformation.FullSemVer;
+                _messageService.Show($"You are running: {version}", "Information");
             }
             catch (Exception ex)
             {
@@ -65,7 +92,8 @@ namespace HelloSquirrel
                     if (_messageService.Show("Update " + newVersion + " available. Dou you want to update now?",
                         "Update", MessageButton.YesNo, MessageImage.Question) != MessageResult.Yes) return;
 
-                    await _updateManager.UpdateApp();
+                    await InUpdate(() => _updateManager.UpdateApp(p => Progress = p));
+
                     if (_messageService.Show("Update applied. Restart application to take effect.",
                         "Information", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
                         Program.Restart();
@@ -88,6 +116,14 @@ namespace HelloSquirrel
             IsBusy = true;
             try { return await op(); }
             finally { IsBusy = false; }
+        }
+
+        private async Task<TResult> InUpdate<TResult>(Func<Task<TResult>> op)
+        {
+            IsUpdating = true;
+            Progress = 0;
+            try { return await op(); }
+            finally { IsUpdating = false; }
         }
     }
 }

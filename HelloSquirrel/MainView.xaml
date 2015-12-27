@@ -17,10 +17,17 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Content"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
+            <TextBlock Text="Content" HorizontalAlignment="Center" Margin="4"/>
+
             <Image x:Name="BusyIndicator" gif:ImageBehavior.AnimatedSource="Images/ajax-loader.gif"
-               Width="16" Height="16" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibility}}"/>
+               Width="16" Height="16" Margin="4"
+               Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibility}}" />
+            
+            <ProgressBar x:Name="Progress" Minimum="0" Maximum="100"
+                Width="150" Height="16" Margin="4"
+                IsIndeterminate="{Binding IsIndeterminate}"
+                Visibility="{Binding IsUpdating, Converter={StaticResource BooleanToVisibility}}" />
         </StackPanel>
         
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
