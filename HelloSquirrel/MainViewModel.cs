@@ -62,14 +62,13 @@ namespace HelloSquirrel
                 var newVersion = updateInfo.FutureReleaseEntry.Version;
                 if (newVersion > currentVersion)
                 {
-                    if (_messageService.Show("Update " + newVersion + " available. Dou you want to update now?", 
-                        "Update", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
-                    {
-                        await _updateManager.UpdateApp();
-                        if (_messageService.Show("Update applied. Restart application to take effect.",
-                            "Information", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
-                            Program.Restart();
-                    }
+                    if (_messageService.Show("Update " + newVersion + " available. Dou you want to update now?",
+                        "Update", MessageButton.YesNo, MessageImage.Question) != MessageResult.Yes) return;
+
+                    await _updateManager.UpdateApp();
+                    if (_messageService.Show("Update applied. Restart application to take effect.",
+                        "Information", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
+                        Program.Restart();
                 }
                 else
                 {
@@ -84,7 +83,7 @@ namespace HelloSquirrel
             }
         }
 
-        async Task<TResult> InBusy<TResult>(Func<Task<TResult>> op)
+        private async Task<TResult> InBusy<TResult>(Func<Task<TResult>> op)
         {
             IsBusy = true;
             try { return await op(); }

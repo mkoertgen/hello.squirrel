@@ -14,7 +14,7 @@ namespace HelloSquirrel
 
         #region Private
 
-        static MessageResult ShowMessageBox(string message, string caption, MessageButton button, MessageImage icon)
+        private static MessageResult ShowMessageBox(string message, string caption, MessageButton button, MessageImage icon)
         {
             if (string.IsNullOrEmpty(message))
                 throw new ArgumentNullException(nameof(message));
@@ -30,19 +30,19 @@ namespace HelloSquirrel
             return TranslateMessageBoxResult(result);
         }
 
-        static MessageResult TranslateMessageBoxResult(MessageBoxResult result)
+        private static MessageResult TranslateMessageBoxResult(MessageBoxResult result)
         {
             var value = result.ToString();
             return (MessageResult)Enum.Parse(typeof(MessageResult), value, true);
         }
 
-        static MessageBoxImage TranslateMessageImage(MessageImage image)
+        private static MessageBoxImage TranslateMessageImage(MessageImage image)
         {
             var value = image.ToString();
             return (MessageBoxImage)Enum.Parse(typeof(MessageBoxImage), value, true);
         }
 
-        static Window GetActiveWindow()
+        private static Window GetActiveWindow()
         {
             if (Application.Current == null)
             {
@@ -53,7 +53,7 @@ namespace HelloSquirrel
             return active ?? Application.Current.MainWindow;
         }
 
-        static MessageBoxButton TranslateMessageButton(MessageButton button)
+        private static MessageBoxButton TranslateMessageButton(MessageButton button)
         {
             try
             {

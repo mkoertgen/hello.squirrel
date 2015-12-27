@@ -13,7 +13,7 @@ namespace HelloSquirrel
     /// DI configuration for AutoFac.
     /// Adapted from http://www.nuget.org/packages/Analects.Caliburn.Micro.Autofac/1.0.0
     /// </summary>
-    class AppBootstrapper : BootstrapperBase
+    internal class AppBootstrapper : BootstrapperBase
     {
         private AppBootstrapper(bool useApplication)
             : base(useApplication)
